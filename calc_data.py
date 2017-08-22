@@ -1,10 +1,5 @@
 def calc_data(typeAgg, stock):
-    import pandas_datareader as pdr
-    import datetime 
-    df_stock = pdr.get_data_yahoo(stock, 
-                          start=datetime.datetime(2006, 10, 1), 
-                          end=datetime.datetime(2012, 1, 1))
-
+    #avalia o calculo para retornar a agragacao
     if typeAgg == 'Média':
         df_stock = df_stock['Close'].mean()
         return df_stock
