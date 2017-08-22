@@ -1,6 +1,5 @@
 import pandas as pd
 import pandas_datareader as pdr
-import datetime
 
 def get_stock(stock):
     stockDf = pdr.get_data_yahoo(stock)
