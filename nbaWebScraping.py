@@ -1,8 +1,9 @@
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd
-def getPlayerStats(url,years):
+def getPlayerStats(years):
     #funcao para recuperar dados danba na web
+    url = 'https://www.fantasypros.com/nba/stats/overall.php?'
     getUrl = url + str("year=") + str(years)
     response = requests.get(getUrl)
     soup = BeautifulSoup(response.text, 'lxml')
@@ -16,17 +17,22 @@ def getPlayerStats(url,years):
         player.append(j[0])
         team.append(j[1])
     team = pd.Series(team).str.replace(')', '')
+    team = pd.Series(team)
     df['Player'] = player
     df['Team'] = team
     df['Year']= years
     return df
 
-def getHist(dfIn,time):
+def getHist(time):
     #funcao para fazer a carga dos dados historicos
+    dfIn = pd.DataFrame()
     for getData in range(len(time)):
-        temp = getPlayerStats(myUrl,time[getData]) 
+        temp = getPlayerStats(time[getData]) 
         dfIn = dfIn.append(temp, ignore_index=True) 
     return dfIn
-    
-# myUrl = 'https://www.fantasypros.com/nba/stats/overall.php'
 
+
+#chamada das funcoes
+dado = getHist(['2016','2015','2014','2013'])
+path = ''
+dado.to_csv(path)
