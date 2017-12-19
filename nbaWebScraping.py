@@ -19,7 +19,7 @@ def getPlayerStats(years):
     team = pd.Series(team).str.replace(')', '')
     team = pd.Series(team)
     df['Player'] = player
-    df['Team'] = team
+    df['Team'] = team.str[0:3]
     df['Year']= years
     return df
 
@@ -27,12 +27,9 @@ def getHist(time):
     #funcao para fazer a carga dos dados historicos
     dfIn = pd.DataFrame()
     for getData in range(len(time)):
-        temp = getPlayerStats(time[getData]) 
-        dfIn = dfIn.append(temp, ignore_index=True) 
+        temp = getPlayerStats(time[getData])
+        dfIn = dfIn.append(temp, ignore_index=True)
     return dfIn
-
-
-#chamada das funcoes
+path = '/Users/rlchagas/Downloads/NBA1.csv'
 dado = getHist(['2016','2015','2014','2013'])
-path = ''
 dado.to_csv(path)
